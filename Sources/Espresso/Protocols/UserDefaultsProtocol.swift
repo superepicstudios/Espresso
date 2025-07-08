@@ -6,7 +6,7 @@
 //  Copyright © 2025 Super Epic Studios, LLC.
 //
 
-import Foundation
+public import Foundation
 
 /// Protocol describing something that interacts with user defaults.
 public protocol UserDefaultsProtocol: Sendable {

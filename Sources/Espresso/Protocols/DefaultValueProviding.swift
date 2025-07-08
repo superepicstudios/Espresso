@@ -6,7 +6,7 @@
 //  Copyright © 2025 Super Epic Studios, LLC.
 //
 
-import Foundation
+public import Foundation
 
 /// Protocol describing something that can provide a default value.
 public protocol DefaultValueProviding {

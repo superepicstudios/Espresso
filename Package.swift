@@ -35,13 +35,15 @@ let package = Package(
                 .target(name: "EspressoMacros")
             ],
             path: "Sources/Espresso",
-            resources: []
+            resources: [],
+            swiftSettings: .modern
         ),
 
         .testTarget(
             name: "EspressoTests",
             dependencies: ["Espresso"],
-            path: "Sources/EspressoTests"
+            path: "Sources/EspressoTests",
+            swiftSettings: .modern
         ),
 
         .macro(
@@ -59,7 +61,8 @@ let package = Package(
                 )
 
             ],
-            path: "Sources/EspressoMacros"
+            path: "Sources/EspressoMacros",
+            swiftSettings: .modern
         ),
 
         .testTarget(
@@ -74,9 +77,24 @@ let package = Package(
                 )
 
             ],
-            path: "Sources/EspressoMacrosTests"
+            path: "Sources/EspressoMacrosTests",
+            swiftSettings: .modern
         )
 
     ],
     swiftLanguageModes: [.v6]
 )
+
+extension [SwiftSetting] {
+
+    static let modern: [SwiftSetting] = [
+
+        .enableUpcomingFeature("ApproachableConcurrency"),
+        .enableUpcomingFeature("ExistentialAny"),
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("StrictConcurrency")
+
+    ]
+
+}

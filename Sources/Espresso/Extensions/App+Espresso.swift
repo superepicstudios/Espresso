@@ -6,7 +6,7 @@
 //  Copyright © 2025 Super Epic Studios, LLC.
 //
 
-import SwiftUI
+public import SwiftUI
 
 #if canImport(UIKit)
 import UIKit

@@ -6,8 +6,10 @@
 //  Copyright © 2025 Super Epic Studios, LLC.
 //
 
-import SwiftSyntax
-import SwiftSyntaxMacros
+import Foundation
+public import SwiftSyntax
+import SwiftSyntaxBuilder
+public import SwiftSyntaxMacros
 
 public struct ChainableMacro: PeerMacro {
     

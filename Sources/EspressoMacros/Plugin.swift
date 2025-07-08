@@ -12,7 +12,7 @@ import SwiftSyntaxMacros
 @main
 struct SECommonMacrosPlugin: CompilerPlugin {
 
-    let providingMacros: [Macro.Type] = [
+    let providingMacros: [any Macro.Type] = [
         ChainableMacro.self
     ]
     

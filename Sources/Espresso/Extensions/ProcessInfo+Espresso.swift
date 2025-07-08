@@ -6,7 +6,7 @@
 //  Copyright © 2025 Super Epic Studios, LLC.
 //
 
-import Foundation
+public import Foundation
 
 extension ProcessInfo {
     
