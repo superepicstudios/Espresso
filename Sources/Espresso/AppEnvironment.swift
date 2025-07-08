@@ -9,7 +9,7 @@
 import Foundation
 
 /// Representation of the various application environments.
-public enum AppEnvironment: String {
+public enum AppEnvironment: String, Sendable {
     
     /// A development environment.
     case development
