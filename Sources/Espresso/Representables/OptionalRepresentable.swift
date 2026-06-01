@@ -13,12 +13,10 @@ public protocol OptionalRepresentable {
     
     associatedtype Wrapped
     
+    /// The optional's wrapped value.
     var wrappedValue: Wrapped? { get }
-    
 }
 
 extension Optional: OptionalRepresentable {
-    
     public var wrappedValue: Wrapped? { self }
-    
 }

@@ -8,11 +8,7 @@
 
 import Foundation
 
-/// A macro that wraps a value in a ``Mutex``,
-/// and enforces thread-safe read & write operations.
-
-/// A macro that generates chainable setter functions
-/// for variables.
+/// A macro that generates chainable setter functions for variables.
 ///
 /// ```swift
 /// struct Container {
@@ -28,6 +24,6 @@ import Foundation
 /// ```
 @attached(peer, names: arbitrary)
 public macro Chainable() = #externalMacro(
-    module: "SECommonMacros",
+    module: "EspressoMacros",
     type: "ChainableMacro"
 )

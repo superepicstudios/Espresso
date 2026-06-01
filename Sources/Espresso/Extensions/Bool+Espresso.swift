@@ -15,5 +15,4 @@ extension Bool {
     
     /// A "false" boolean string value.
     public static let falseString = "false"
-    
 }

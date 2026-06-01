@@ -10,10 +10,8 @@ import SwiftCompilerPlugin
 import SwiftSyntaxMacros
 
 @main
-struct SECommonMacrosPlugin: CompilerPlugin {
-
+struct EspressoMacrosPlugin: CompilerPlugin {
     let providingMacros: [any Macro.Type] = [
         ChainableMacro.self
     ]
-    
 }

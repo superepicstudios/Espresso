@@ -11,10 +11,11 @@ import Foundation
 /// A `nil` representation over a type.
 public struct None<T> {
     
+    /// The type's `nil` value.
     public static var value: T? { nil }
     
-    private init() {}
-    
+    /// Initializes a `None`.
+    public init() {}
 }
 
 extension None: Sendable where T: Sendable {}

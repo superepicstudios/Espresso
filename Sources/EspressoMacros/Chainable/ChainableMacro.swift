@@ -37,7 +37,7 @@ public struct ChainableMacro: PeerMacro {
         providingPeersOf declaration: some SwiftSyntax.DeclSyntaxProtocol,
         in context: some SwiftSyntaxMacros.MacroExpansionContext
     ) throws -> [DeclSyntax] {
-
+        
         guard let variable = declaration.as(VariableDeclSyntax.self) else {
             throw Error.nonVariable
         }
@@ -58,7 +58,6 @@ public struct ChainableMacro: PeerMacro {
         var accessLevel: String?
         
         for modifier in variable.modifiers {
-            
             let name = modifier.trimmed.name.text
             let modifiers: Set<String> = ["public", "package", "internal", "private"]
             
@@ -66,7 +65,6 @@ public struct ChainableMacro: PeerMacro {
                 accessLevel = "\(name) "
                 break
             }
-            
         }
         
         let variableName = identifier.text
@@ -81,7 +79,5 @@ public struct ChainableMacro: PeerMacro {
         """
         
         return [DeclSyntax(stringLiteral: output)]
-        
     }
-    
 }

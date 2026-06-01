@@ -27,19 +27,12 @@ extension BundleInfoProviding {
     public var bundleBuild: String? {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
-    
 }
 
 #if canImport(UIKit)
-
 import UIKit
-
 extension UIApplication: BundleInfoProviding {}
-
 #elseif canImport(AppKit)
-
 import AppKit
-
 extension NSApplication: BundleInfoProviding {}
-
 #endif

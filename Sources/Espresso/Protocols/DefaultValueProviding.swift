@@ -13,7 +13,6 @@ public protocol DefaultValueProviding {
     
     /// The type's default value.
     static var defaultValue: Self { get }
-
 }
 
 // MARK: Bool
@@ -107,19 +106,19 @@ extension CGFloat: DefaultValueProviding {
 }
 
 extension CGVector: DefaultValueProviding {
-    public static var defaultValue: Self { .init() }
+    public static var defaultValue: Self { .zero }
 }
 
 extension CGPoint: DefaultValueProviding {
-    public static var defaultValue: Self { .init() }
+    public static var defaultValue: Self { .zero }
 }
 
 extension CGSize: DefaultValueProviding {
-    public static var defaultValue: Self { .init() }
+    public static var defaultValue: Self { .zero }
 }
 
 extension CGRect: DefaultValueProviding {
-    public static var defaultValue: Self { .init() }
+    public static var defaultValue: Self { .zero }
 }
 
 extension NSNumber: DefaultValueProviding {

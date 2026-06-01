@@ -13,13 +13,10 @@ public protocol KeyProtocol {
     
     /// The key's string value.
     var value: String { get }
-    
 }
 
 extension KeyProtocol where Self: RawRepresentable, RawValue == String {
-    
     public var value: String {
         return self.rawValue
     }
-    
 }

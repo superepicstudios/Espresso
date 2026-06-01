@@ -12,7 +12,7 @@ extension ProcessInfo {
     
     /// Flag indicating if the process is currently attached to a debug session.
     public var isDebugSessionAttached: Bool {
-                    
+        
         var isAttached: Bool = false
         
         var name: [Int32] = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
@@ -20,13 +20,11 @@ extension ProcessInfo {
         var infoSize = MemoryLayout<kinfo_proc>.size
         
         let success = name.withUnsafeMutableBytes { ptr -> Bool in
-            
-            guard let address = ptr
-                .bindMemory(to: Int32.self)
-                .baseAddress else { return false }
+            guard let address = ptr.bindMemory(to: Int32.self).baseAddress else {
+                return false
+            }
             
             return (sysctl(address, 4, &info, &infoSize, nil, 0) != -1)
-            
         }
         
         if !success {
@@ -36,9 +34,7 @@ extension ProcessInfo {
         if !isAttached && (info.kp_proc.p_flag & P_TRACED) != 0 {
             isAttached = true
         }
-
-        return isAttached
         
+        return isAttached
     }
-    
 }

@@ -107,3 +107,4 @@ public protocol UserDefaultsProtocol: Sendable {
 }
 
 extension UserDefaults: UserDefaultsProtocol, @retroactive @unchecked Sendable {}
+
