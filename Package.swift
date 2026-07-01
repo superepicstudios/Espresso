@@ -13,6 +13,8 @@ let package = Package(
         .library(for: .espresso)
     ],
     dependencies: [
+        .appleDevices,
+        .safeSymbols,
         .swiftSyntax
     ],
     targets: [
@@ -25,6 +27,17 @@ let package = Package(
 // MARK: Packages
 
 extension Package.Dependency {
+    
+    static let appleDevices: Package.Dependency = .package(
+        url: "https://github.com/superepicstudios/apple-devices",
+        from: "2026.0.0"
+    )
+    
+    static let safeSymbols: Package.Dependency = .package(
+        url: "https://github.com/SFSafeSymbols/SFSafeSymbols",
+        from: "7.0.0"
+    )
+    
     static let swiftSyntax: Package.Dependency = .package(
         url: "https://github.com/swiftlang/swift-syntax.git",
         from: "600.0.0"
@@ -38,7 +51,9 @@ extension Target {
     static let espresso: Target = .target(
         name: "Espresso",
         dependencies: [
-            "EspressoMacros"
+            .appleDevices,
+            "EspressoMacros",
+            .safeSymbols
         ],
         swiftSettings: .default
     )
@@ -68,6 +83,16 @@ extension Target {
 
 extension Target.Dependency {
 
+    static let appleDevices: Target.Dependency = .product(
+        name: "AppleDevices",
+        package: "apple-devices"
+    )
+    
+    static let safeSymbols: Target.Dependency = .product(
+        name: "SFSafeSymbols",
+        package: "SFSafeSymbols"
+    )
+    
     static let swiftCompilerPlugin: Target.Dependency = .product(
         name: "SwiftCompilerPlugin",
         package: "swift-syntax"

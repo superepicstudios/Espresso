@@ -16,8 +16,8 @@ public struct MemoryAddress<T> {
     
     /// The memory address's string representation.
     public var string: String {
-        let length = 2 + 2 * MemoryLayout<UnsafeRawPointer>.size
-        return String(format: "%0\(length)p", self.value)
+        let size = MemoryLayout<UnsafeRawPointer>.size
+        return String(format: "%0\(size)p", self.value)
     }
     
     /// Initializes a memory address with a struct pointer.
