@@ -67,7 +67,7 @@ extension SFSymbol: AnyImage {
 
 extension AnyImage where Self: SFSymbol {
     
-    public func platform(variableValue value: Double) -> PlatformImage {
+    public func platform(variableValue value: Double = 1) -> PlatformImage {
         PlatformImage(
             systemSymbol: self,
             variableValue: value,
@@ -75,7 +75,7 @@ extension AnyImage where Self: SFSymbol {
         )
     }
     
-    public func swift(variableValue value: Double) -> Image {
+    public func swift(variableValue value: Double = 1) -> Image {
         Image(
             systemSymbol: self,
             variableValue: value

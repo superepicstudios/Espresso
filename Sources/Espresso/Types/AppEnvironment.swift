@@ -9,7 +9,7 @@
 import Foundation
 
 /// Representation of the various application environments.
-public enum AppEnvironment: String, Sendable {
+public enum AppEnvironment: String, Identifiable, Codable, Sendable {
     
     /// A development environment.
     case development
@@ -31,6 +31,10 @@ public enum AppEnvironment: String, Sendable {
     
     /// A production environment.
     case production
+    
+    public var id: String {
+        self.rawValue
+    }
     
     /// The environment's short name.
     public var shortName: String {

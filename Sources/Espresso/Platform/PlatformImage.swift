@@ -15,3 +15,23 @@ public typealias PlatformImage = UIImage
 public import AppKit
 public typealias PlatformImage = NSImage
 #endif
+
+extension PlatformImage {
+    
+    public static func `in`(
+        bundle: Bundle,
+        name: String
+    ) -> PlatformImage? {
+        #if os(iOS)
+        UIImage(
+            named: name,
+            in: bundle,
+            with: nil
+        )
+        #elseif os(macOS)
+        bundle.image(forResource: .init(name))
+        #else
+        fatalError("Platform not supported")
+        #endif
+    }
+}

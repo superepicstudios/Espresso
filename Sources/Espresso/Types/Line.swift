@@ -16,8 +16,8 @@ public struct HLine: Shape {
     
     public nonisolated func path(in rect: CGRect) -> Path {
         var path = Path()
-        path.move(to: .zero)
-        path.addLine(to: .init(x: rect.width, y: 0))
+        path.move(to: .init(x: rect.minX, y: rect.midY))
+        path.addLine(to: .init(x: rect.maxX, y: rect.midY))
         return path
     }
 }
@@ -30,8 +30,8 @@ public struct VLine: Shape {
     
     public nonisolated func path(in rect: CGRect) -> Path {
         var path = Path()
-        path.move(to: .zero)
-        path.addLine(to: .init(x: 0, y: rect.height))
+        path.move(to: .init(x: rect.midX, y: rect.minY))
+        path.addLine(to: .init(x: rect.midX, y: rect.maxY))
         return path
     }
 }

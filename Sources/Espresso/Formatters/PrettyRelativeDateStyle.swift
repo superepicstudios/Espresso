@@ -10,11 +10,6 @@ import Foundation
 
 // TODO: Localization
 
-// Today
-// Tomorrow
-// This Week
-// Next Week
-
 public struct PrettyRelativeDateStyle: FormatStyle {
     
     public typealias FormatInput = Date
@@ -25,46 +20,72 @@ public struct PrettyRelativeDateStyle: FormatStyle {
         var string = "???"
         let calendar = Calendar.current
         
-        if value.isYesterday { string = "Yesterday" }
-        else if value.isToday { string = "Today" }
-        else if value.isTomorrow { string = "Tomorrow" }
-
-        else if value.isLastWeek { string = "Last Week" }
-        else if value.isThisWeek { string = "This Week" }
-        else if value.isNextWeek { string = "Next Week" }
+        let spellOutNumberFormatter = NumberFormatter()
+        spellOutNumberFormatter.numberStyle = .spellOut
         
-        else if value.isLastMonth { string = "Last Month" }
+        if value.isToday { string = "Today" }
+        else if value.isYesterday { string = "Yesterday" }
+        else if value.isTomorrow { string = "Tomorrow" }
+        else if value.isThisWeek {
+            
+            let numberOfDays = calendar.dateComponents(
+                [.day],
+                from: .today,
+                to: value
+            ).day ?? 0
+            
+            let numberOfDaysString = spellOutNumberFormatter.string(
+                for: numberOfDays
+            )?.capitalized ?? "\(numberOfDays)"
+            
+            string = if numberOfDays == 1 {
+                "\(numberOfDaysString) Day"
+            } else {
+                "\(numberOfDaysString) Days"
+            }
+        }
+        else if value.isLastWeek { string = "Last Week" }
+        else if value.isNextWeek { string = "Next Week" }
         else if value.isThisMonth {
             
-            // "This Month"
-            // 2 weeks
-            // 3 weeks
-            
-            let weeks = calendar.dateComponents(
+            let numberOfWeeks = calendar.dateComponents(
                 [.weekOfYear],
                 from: .today,
                 to: value.endOfWeek
             ).weekOfYear ?? 0
             
-            string = if weeks == 1 {
-                "1 Week"
+            let numberOfWeeksString = spellOutNumberFormatter.string(
+                for: numberOfWeeks
+            )?.capitalized ?? "\(numberOfWeeks)"
+            
+            string = if numberOfWeeks == 1 {
+                "\(numberOfWeeksString) Week"
             } else {
-                "\(weeks) Weeks"
+                "\(numberOfWeeksString) Weeks"
             }
         }
+        else if value.isLastMonth { string = "Last Month" }
         else if value.isNextMonth { string = "Next Month" }
-        
-        else if value.isLastYear { string = "Last Year" }
         else if value.isThisYear {
             
-            // 2 Months
-            // 3 Months
-            // etc
+            let numberOfMonths = calendar.dateComponents(
+                [.month],
+                from: .today,
+                to: value.endOfMonth
+            ).month ?? 0
             
-            string = "This Year"
+            let numberOfMonthsString = spellOutNumberFormatter.string(
+                for: numberOfMonths
+            )?.capitalized ?? "\(numberOfMonths)"
+            
+            string = if numberOfMonths == 1 {
+                "\(numberOfMonthsString) Month"
+            } else {
+                "\(numberOfMonthsString) Months"
+            }
         }
+        else if value.isLastYear { string = "Last Year" }
         else if value.isNextYear { string = "Next Year" }
-        
         else if value < .today { string = "Past" }
         else if value > .today { string = "Future" }
 
