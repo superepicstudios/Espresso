@@ -6,16 +6,16 @@
 //  Copyright © 2026 Super Epic Studios, LLC.
 //
 
-public import UIKit
 public import SwiftUI
+public import UIKit
 
-@Observable
-public final class ViewHost {
-    
-    public internal(set) weak var controller: UIViewController?
-    public internal(set) var isControllerVisible = false
-    
-    public init() {}
+@MainActor
+public protocol ViewHosting: Observable {
+    var controller: UIViewController? { get }
+    var isControllerVisible: Bool { get }
+}
+
+extension ViewHosting {
     
     /// Resolves the host at action time and executes the async closure if it exists.
     ///
@@ -26,7 +26,6 @@ public final class ViewHost {
     ///   `UIViewController` weakly held by this container. Do not retain `host`
     ///   beyond the lifetime of the closure — doing so can create a reference cycle
     ///   in SwiftUI views hosted by this container.
-    @MainActor
     public func withHostingController(_ body: (UIViewController) async -> Void) async {
         guard let controller else {
             return
@@ -35,11 +34,24 @@ public final class ViewHost {
     }
 }
 
+@MainActor @Observable
+public final class ViewHost: ViewHosting {
+    public internal(set) weak var controller: UIViewController?
+    public internal(set) var isControllerVisible: Bool = false
+}
+
+@MainActor @Observable
+public final class ViewHostMock: ViewHosting {
+    public let controller: UIViewController? = nil
+    public let isControllerVisible: Bool = false
+    
+    public init() {}
+}
+
 // MARK: UIKit
 
-extension ViewHost {
+extension ViewHosting {
     
-    @MainActor
     public func present(
         _ viewController: UIViewController,
         animated: Bool = true,
@@ -54,9 +66,9 @@ extension ViewHost {
         let controller: UIViewController = if embedInNavigation {
             UINavigationController(rootViewController: viewController)
         } else { viewController }
-        
+
         controller.modalPresentationStyle = style
-        
+
         hostingController.present(
             controller,
             animated: animated,
@@ -64,7 +76,6 @@ extension ViewHost {
         )
     }
     
-    @MainActor
     public func push(
         _ viewController: UIViewController,
         animated: Bool = true
@@ -75,12 +86,10 @@ extension ViewHost {
         )
     }
     
-    @MainActor
     public func pop(animated: Bool = true) {
         self.controller?.navigationController?.popViewController(animated: animated)
     }
     
-    @MainActor
     public func popToViewController(
         _ viewController: UIViewController,
         animated: Bool = true
@@ -91,7 +100,6 @@ extension ViewHost {
         )
     }
     
-    @MainActor
     public func popToRoot(animated: Bool = true) {
         self.controller?.navigationController?.popToRootViewController(animated: animated)
     }
@@ -99,9 +107,8 @@ extension ViewHost {
 
 // MARK: SwiftUI
 
-extension ViewHost {
+extension ViewHosting {
     
-    @MainActor
     public func present(
         _ content: some View,
         animated: Bool = true,
@@ -118,7 +125,6 @@ extension ViewHost {
         )
     }
     
-    @MainActor
     public func present(
         animated: Bool = true,
         style: UIModalPresentationStyle = .automatic,
@@ -135,21 +141,19 @@ extension ViewHost {
         )
     }
     
-    @MainActor
     public func push(
         _ content: some View,
         animated: Bool = true
     ) {
         let hostingController = ViewHostingController(content: content)
 //        hostingController.hidesBottomBarWhenPushed = self.host?.hidesBottomBarWhenPushed ?? false
-        
+
         push(
             hostingController,
             animated: animated
         )
     }
     
-    @MainActor
     public func push(
         animated: Bool = true,
         @ViewBuilder content: @escaping () -> some View

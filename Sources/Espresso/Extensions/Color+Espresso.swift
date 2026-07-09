@@ -19,4 +19,8 @@ extension Color {
             dark: dark.platform
         ).swift
     }
+    
+    public init(hex: String) {
+        self.init(uiColor: .init(hex: hex))
+    }
 }
