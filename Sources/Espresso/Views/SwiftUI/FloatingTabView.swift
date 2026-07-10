@@ -9,7 +9,7 @@
 public import SwiftUI
 
 public protocol FloatingTabItem: Identifiable where Self.ID == Int {
-    var title: String { get }
+    var title: String? { get }
     var image: AnyImage { get }
     var selectedColor: Color { get }
     var deselectedColor: Color { get }
@@ -134,9 +134,11 @@ public struct FloatingTabView<Item: FloatingTabItem>: View {
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundStyle(selected ? item.selectedColor : item.deselectedColor)
 
-            Text(item.title)
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(selected ? item.selectedColor : item.deselectedColor)
+            if let title = item.title {
+                Text(title)
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(selected ? item.selectedColor : item.deselectedColor)
+            }
         }
         .frame(size: layout.itemSize)
         .contentShape(Rectangle())

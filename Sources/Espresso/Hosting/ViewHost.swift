@@ -76,6 +76,16 @@ extension ViewHosting {
         )
     }
     
+    public func dismiss(
+        animated: Bool = true,
+        completion: VoidAction? = nil
+    ) {
+        self.controller?.dismiss(
+            animated: animated,
+            completion: completion
+        )
+    }
+    
     public func push(
         _ viewController: UIViewController,
         animated: Bool = true
