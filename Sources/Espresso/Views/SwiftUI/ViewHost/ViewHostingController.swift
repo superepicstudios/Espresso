@@ -16,12 +16,12 @@ open class ViewHostingController<Content: View>: UIHostingController<ViewHosting
         set {
             rootView = HostedView(
                 content: newValue,
-                host: self.host
+                viewHost: self.viewHost
             )
         }
     }
     
-    private let host = ViewHost()
+    private let viewHost = ViewHost()
     public private(set) var isViewVisible = false
     
     // MARK: Initializers
@@ -29,10 +29,10 @@ open class ViewHostingController<Content: View>: UIHostingController<ViewHosting
     public init(content: Content) {
         super.init(rootView: HostedView(
             content: content,
-            host: self.host
+            viewHost: self.viewHost
         ))
 
-        self.host.controller = self
+        self.viewHost.controller = self
     }
     
     public convenience init(@ViewBuilder content: @escaping () -> Content) {
@@ -47,7 +47,7 @@ open class ViewHostingController<Content: View>: UIHostingController<ViewHosting
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.host.isControllerVisible = true
+        self.viewHost.isControllerVisible = true
     }
 
     override open func viewDidAppear(_ animated: Bool) {
@@ -57,7 +57,7 @@ open class ViewHostingController<Content: View>: UIHostingController<ViewHosting
 
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.host.isControllerVisible = false
+        self.viewHost.isControllerVisible = false
     }
 
     override open func viewDidDisappear(_ animated: Bool) {
@@ -71,18 +71,18 @@ extension ViewHostingController {
     public struct HostedView: View {
 
         fileprivate let content: Content
-        private var host: ViewHost
+        private var viewHost: any ViewHosting
 
         fileprivate init(
             content: Content,
-            host: ViewHost
+            viewHost: any ViewHosting
         ) {
             self.content = content
-            self.host = host
+            self.viewHost = viewHost
         }
         
         public var body: some View {
-            self.content.environment(self.host)
+            self.content.environment(\.viewHost, self.viewHost)
         }
     }
 }

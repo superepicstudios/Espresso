@@ -10,7 +10,7 @@ public import SwiftUI
 public import UIKit
 
 @MainActor
-public protocol ViewHosting: Observable {
+public protocol ViewHosting: AnyObject, Observable {
     var controller: UIViewController? { get }
     var isControllerVisible: Bool { get }
 }
@@ -36,16 +36,11 @@ extension ViewHosting {
 
 @MainActor @Observable
 public final class ViewHost: ViewHosting {
+    
     public internal(set) weak var controller: UIViewController?
     public internal(set) var isControllerVisible: Bool = false
-}
-
-@MainActor @Observable
-public final class ViewHostMock: ViewHosting {
-    public let controller: UIViewController? = nil
-    public let isControllerVisible: Bool = false
     
-    public init() {}
+    nonisolated init() {}
 }
 
 // MARK: UIKit
